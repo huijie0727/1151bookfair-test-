@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>萬聖節主題書展 - 抓鬼九宮格</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #0c0714;
+      color: #f3f4f6;
+    }
+    .font-spooky {
+      font-family: 'Creepster', 'Noto Sans TC', cursive;
+    }
+    .bg-spooky-purple {
+      background-color: #1a0b2e;
+    }
+    .bg-spooky-card {
+      background-color: #26123d;
+    }
+    .border-spooky-orange {
+      border-color: #ff6b00;
+    }
+    .text-spooky-orange {
+      color: #ff7700;
+    }
+    .text-spooky-green {
+      color: #00ff66;
+    }
+    .ghost-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(3deg); }
+    }
+    .pulse-glow {
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 10px #ff6b00, 0 0 20px #ff6b00; }
+      to { box-shadow: 0 0 20px #ff9e00, 0 0 35px #ff9e00; }
+    }
+    .active-tab {
+      background-color: #ff6b00 !important;
+      color: #1a0b2e !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden relative">
+
+  <!-- 背景漂浮萬聖節元素 -->
+  <div class="fixed inset-0 pointer-events-none z-0 opacity-20 overflow-hidden">
+    <div class="absolute top-10 left-5 text-4xl ghost-float">👻</div>
+    <div class="absolute top-1/4 right-8 text-5xl ghost-float" style="animation-delay: 1s;">🎃</div>
+    <div class="absolute bottom-20 left-12 text-5xl ghost-float" style="animation-delay: 1.5s;">🦇</div>
+    <div class="absolute bottom-10 right-10 text-4xl ghost-float" style="animation-delay: 0.5s;">🕷️</div>
+    <div class="absolute top-1/2 left-1/3 text-3xl ghost-float" style="animation-delay: 2s;">🕸️</div>
+  </div>
+
+  <!-- 頂部頁首與後臺登入入口 -->
+  <header class="relative z-10 w-full p-4 flex justify-between items-center bg-spooky-purple/80 border-b border-purple-900/50 backdrop-blur-sm">
+    <div class="flex items-center space-x-2">
+      <span class="text-3xl">🎃</span>
+      <span class="font-bold text-xl tracking-wider text-spooky-orange">主題書展：抓鬼九宮格</span>
+    </div>
+    <button onclick="openAdminModal()" class="px-3 py-1.5 rounded-lg bg-purple-950/80 hover:bg-purple-900 border border-purple-700/50 text-xs text-purple-300 transition flex items-center gap-1">
+      <span>⚙️</span> 老師後臺
+    </button>
+  </header>
+
+  <!-- 主要內容區域 -->
+  <main class="relative z-10 container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col justify-center items-center">
+
+    <!-- 1. 首頁 START VIEW -->
+    <div id="view-start" class="w-full text-center space-y-6 max-w-xl">
+      <div class="space-y-2">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-400 to-green-400 drop-shadow-lg tracking-wider">
+          👻 抓鬼九宮格 🎃
+        </h1>
+        <p class="text-purple-300 text-sm md:text-base font-medium">中高年級萬聖節主題書展闖關遊戲</p>
+      </div>
+
+      <!-- 說明卡片 -->
+      <div class="bg-spooky-card border-2 border-purple-800/60 rounded-2xl p-6 text-left space-y-4 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 text-7xl opacity-10 pointer-events-none">📖</div>
+        
+        <h2 class="text-lg font-bold text-spooky-orange flex items-center gap-2 border-b border-purple-800/80 pb-2">
+          <span>📜</span> 遊戲說明與規則
+        </h2>
+
+        <ul class="space-y-2.5 text-sm md:text-base text-gray-200">
+          <li class="flex items-start gap-2">
+            <span class="text-orange-400 font-bold">•</span>
+            <span>九宮格中每一格分別有一個選擇題，<b>三個選擇題都答對連成一條線</b>，表示闖關成功！</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-orange-400 font-bold">•</span>
+            <span>每位學生總共有 <b>3 次錯誤的機會</b> ❤️❤️❤️，超過 3 次失敗就需要重頭開始。</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-orange-400 font-bold">•</span>
+            <span>請參考主題書展專區書籍回答題目。</span>
+          </li>
+          <li class="flex items-start gap-2 text-amber-300 bg-amber-950/40 p-2.5 rounded-lg border border-amber-800/40 font-semibold">
+            <span class="text-amber-400 font-bold">🍬</span>
+            <span>回答正確出示闖關成功畫面，可至圖書館櫃台領取糖果一顆！ (每人限一顆)</span>
+          </li>
+          <li class="flex items-start gap-2 text-red-300 bg-red-950/40 p-2.5 rounded-lg border border-red-800/40 font-semibold">
+            <span class="text-red-400 font-bold">🚫</span>
+            <span>圖書館內禁止飲食。</span>
+          </li>
+          <li class="flex items-start gap-2 text-amber-300/80 bg-purple-950/40 p-2 rounded-lg border border-purple-800/40 text-xs md:text-sm">
+            <span class="text-amber-400 font-bold">1.</span>
+            <span>本次主題書展的漂書在展期結束後，開放借閱實體書籍。</span>
+          </li>
+          <li class="flex items-start gap-2 text-amber-300/80 bg-purple-950/40 p-2 rounded-lg border border-purple-800/40 text-xs md:text-sm">
+            <span class="text-amber-400 font-bold">2.</span>
+            <span>每一題目作答時間不限制，請仔細思考後回答！</span>
+          </li>
+        </ul>
+
+        <!-- 學生班級座號選擇表單 -->
+        <div class="pt-2 space-y-3 border-t border-purple-800/80">
+          <label class="block text-sm font-bold text-purple-200">請輸入學生基本資料：</label>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <span class="block text-xs text-purple-400 mb-1">班級</span>
+              <select id="select-class" class="w-full bg-purple-950 border border-purple-700 rounded-lg p-2.5 text-white font-bold focus:ring-2 focus:ring-orange-500 outline-none">
+                <option value="">-- 請選擇班級 --</option>
+                <optgroup label="三年級"><option value="301">301</option><option value="302">302</option><option value="303">303</option><option value="304">304</option><option value="305">305</option></optgroup>
+                <optgroup label="四年級"><option value="401">401</option><option value="402">402</option><option value="403">403</option><option value="404">404</option><option value="405">405</option><option value="406">406</option></optgroup>
+                <optgroup label="五年級"><option value="501">501</option><option value="502">502</option><option value="503">503</option><option value="504">504</option><option value="505">505</option><option value="506">506</option></optgroup>
+                <optgroup label="六年級"><option value="601">601</option><option value="602">602</option><option value="603">603</option><option value="604">604</option><option value="605">605</option><option value="606">606</option><option value="607">607</option></optgroup>
+              </select>
+            </div>
+            <div>
+              <span class="block text-xs text-purple-400 mb-1">座號</span>
+              <select id="select-seat" class="w-full bg-purple-950 border border-purple-700 rounded-lg p-2.5 text-white font-bold focus:ring-2 focus:ring-orange-500 outline-none">
+                <option value="">-- 請選擇座號 --</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 開始按鈕 -->
+      <button onclick="startGame()" class="pulse-glow w-full py-4 rounded-2xl bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 hover:from-orange-500 hover:to-amber-400 text-purple-950 font-black text-2xl tracking-widest shadow-lg transform transition active:scale-95 flex items-center justify-center gap-2">
+        <span>準備好了嗎？--- 開始按鈕</span> 🚀
+      </button>
+    </div>
+
+
+    <!-- 2. 九宮格主畫面 GRID VIEW -->
+    <div id="view-grid" class="w-full space-y-4 hidden max-w-2xl">
+      <!-- 頂部狀態列 -->
+      <div class="flex justify-between items-center bg-spooky-card p-3 rounded-xl border border-purple-800/80 text-sm md:text-base">
+        <div class="flex items-center space-x-2">
+          <span class="px-2.5 py-1 bg-purple-900 rounded-lg text-orange-400 font-bold" id="display-student-info">301班 01號</span>
+        </div>
+        <div class="flex items-center space-x-3">
+          <div id="hearts-container" class="flex text-lg" title="剩餘錯誤機會">
+            ❤️❤️❤️
+          </div>
+          <button onclick="confirmRestartGame()" class="px-3 py-1 bg-red-900/60 hover:bg-red-800 text-red-200 border border-red-700/50 rounded-lg text-xs transition">
+            🔄 重新開始
+          </button>
+        </div>
+      </div>
+
+      <!-- 九宮格 3x3 Grid -->
+      <div id="grid-container" class="grid grid-cols-3 gap-3 md:gap-4 p-3 bg-spooky-card rounded-2xl border-2 border-orange-500/50 shadow-2xl relative">
+        <!-- 9個格子會由 JS 動態生成 -->
+      </div>
+
+      <!-- 九宮格下方醒目提示方塊 -->
+      <div class="bg-gradient-to-r from-purple-950 via-purple-900 to-purple-950 border border-orange-500/40 rounded-xl p-3 text-center space-y-1 shadow-lg text-xs md:text-sm">
+        <p class="text-amber-300 font-bold flex items-center justify-center gap-1">
+          💡 點擊任何格子回答問題，連成任一直線（橫、豎、斜）即闖關成功！
+        </p>
+        <p class="text-orange-400 font-semibold flex items-center justify-center gap-1">
+          💡 萬聖節主題書展 - 抓鬼九宮格 🎃 實體書歡迎前往展期結束圖書館參閱與借閱
+        </p>
+      </div>
+    </div>
+
+
+    <!-- 3. 單一題目作答頁面 QUESTION VIEW -->
+    <div id="view-question" class="w-full space-y-5 hidden max-w-2xl">
+      <div class="bg-spooky-card border-2 border-purple-700 rounded-2xl p-5 shadow-2xl space-y-4">
+        <!-- 書本標題與難度 -->
+        <div class="flex justify-between items-start border-b border-purple-800 pb-3">
+          <div>
+            <span id="q-difficulty" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">★</span>
+            <h3 id="q-book" class="text-xl font-black text-orange-400 mt-1">《書籍名稱》</h3>
+          </div>
+          <button onclick="backToGrid()" class="px-3 py-1 bg-purple-900/80 hover:bg-purple-800 text-purple-200 border border-purple-700 text-xs rounded-lg transition">
+            ↩️ 返回九宮格
+          </button>
+        </div>
+
+        <!-- 書本封面與問題區域 -->
+        <div class="flex flex-col md:flex-row gap-4 items-center">
+          <div class="w-32 h-44 md:w-36 md:h-48 flex-shrink-0 bg-purple-950 rounded-lg overflow-hidden border border-purple-600/50 shadow-md flex items-center justify-center">
+            <img id="q-cover-img" src="" alt="封面" class="w-full h-full object-cover">
+          </div>
+          <div class="flex-grow space-y-2 w-full">
+            <div class="text-sm text-purple-300 font-semibold">題目：</div>
+            <div id="q-text" class="text-lg font-bold text-white leading-snug">問題載入中...</div>
+            <div id="q-hint" class="text-xs text-amber-300/80 italic font-medium">提示：</div>
+          </div>
+        </div>
+
+        <!-- 4個選擇題選項 -->
+        <div class="space-y-2.5 pt-2">
+          <button onclick="submitAnswer('A')" class="w-full text-left p-3.5 rounded-xl bg-purple-950/80 hover:bg-orange-600/20 border border-purple-700/80 hover:border-orange-500 text-gray-100 font-semibold transition flex items-center gap-3">
+            <span class="w-7 h-7 flex items-center justify-center bg-purple-900 rounded-full text-orange-400 font-bold border border-purple-700 text-sm">A</span>
+            <span id="opt-A" class="flex-grow">選項 A</span>
+          </button>
+          <button onclick="submitAnswer('B')" class="w-full text-left p-3.5 rounded-xl bg-purple-950/80 hover:bg-orange-600/20 border border-purple-700/80 hover:border-orange-500 text-gray-100 font-semibold transition flex items-center gap-3">
+            <span class="w-7 h-7 flex items-center justify-center bg-purple-900 rounded-full text-orange-400 font-bold border border-purple-700 text-sm">B</span>
+            <span id="opt-B" class="flex-grow">選項 B</span>
+          </button>
+          <button onclick="submitAnswer('C')" class="w-full text-left p-3.5 rounded-xl bg-purple-950/80 hover:bg-orange-600/20 border border-purple-700/80 hover:border-orange-500 text-gray-100 font-semibold transition flex items-center gap-3">
+            <span class="w-7 h-7 flex items-center justify-center bg-purple-900 rounded-full text-orange-400 font-bold border border-purple-700 text-sm">C</span>
+            <span id="opt-C" class="flex-grow">選項 C</span>
+          </button>
+          <button onclick="submitAnswer('D')" class="w-full text-left p-3.5 rounded-xl bg-purple-950/80 hover:bg-orange-600/20 border border-purple-700/80 hover:border-orange-500 text-gray-100 font-semibold transition flex items-center gap-3">
+            <span class="w-7 h-7 flex items-center justify-center bg-purple-900 rounded-full text-orange-400 font-bold border border-purple-700 text-sm">D</span>
+            <span id="opt-D" class="flex-grow">選項 D</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 4. 闖關成功畫面 WIN VIEW -->
+    <div id="view-win" class="w-full text-center space-y-6 hidden max-w-xl">
+      <div class="bg-spooky-card border-2 border-amber-500/80 rounded-2xl p-8 shadow-2xl space-y-5 relative overflow-hidden">
+        <div class="text-7xl ghost-float">🏆</div>
+        <h2 class="text-4xl font-extrabold text-amber-400 tracking-wider">🎉 闖關成功！</h2>
+        <p class="text-lg text-gray-200">恭喜 <span id="win-student-name" class="font-bold text-orange-400"></span> 成功連成一直線！</p>
+        
+        <div class="bg-amber-950/60 border border-amber-500/50 rounded-xl p-4 space-y-2 text-sm text-amber-200">
+          <p class="font-bold text-base text-amber-300">🍬 領取獎勵說明：</p>
+          <p>請保留此畫面並至<b>圖書館櫃台</b>出示給老師看，即可領取<b>糖果一顆</b>喔！（每人限領一顆）</p>
+          <p class="text-xs text-red-300">⚠️ 提醒：圖書館內禁止飲食喔！</p>
+        </div>
+
+        <div class="pt-2 flex justify-center gap-4">
+          <button onclick="resetToHome()" class="px-6 py-3 rounded-xl bg-purple-900 hover:bg-purple-800 border border-purple-600 text-white font-bold transition">
+            🏠 回首頁
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 闖關失敗畫面 GAME OVER VIEW -->
+    <div id="view-gameover" class="w-full text-center space-y-6 hidden max-w-xl">
+      <div class="bg-spooky-card border-2 border-red-700 rounded-2xl p-8 shadow-2xl space-y-5">
+        <div class="text-7xl">💀</div>
+        <h2 class="text-3xl font-extrabold text-red-500">挑戰失敗...</h2>
+        <p class="text-gray-300">很遺憾，3 次錯誤機會已經用完囉！抓鬼挑戰需要重頭開始～</p>
+        
+        <button onclick="restartGame()" class="w-full py-3.5 rounded-xl bg-red-800 hover:bg-red-700 text-white font-bold text-lg transition shadow-lg">
+          🔄 重新挑選題目開始
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="relative z-10 w-full p-3 text-center text-xs text-purple-400/60 border-t border-purple-950 bg-black/40">
+    萬聖節主題書展 - 抓鬼九宮格闖關遊戲
+  </footer>
+
+
+  <!-- 老師後臺 Modal -->
+  <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-spooky-card border-2 border-purple-700 rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- 後臺標頭 -->
+      <div class="p-4 bg-spooky-purple border-b border-purple-800 flex justify-between items-center">
+        <h3 class="text-lg font-bold text-orange-400 flex items-center gap-2">
+          <span>⚙️</span> 老師後臺管理
+        </h3>
+        <button onclick="closeAdminModal()" class="text-gray-400 hover:text-white text-xl font-bold">✕</button>
+      </div>
+
+      <!-- 密碼驗證頁面 -->
+      <div id="admin-login" class="p-6 space-y-4 text-center">
+        <p class="text-purple-200 text-sm">請輸入後臺管理密碼：</p>
+        <input type="password" id="admin-pass-input" placeholder="請輸入密碼" class="px-4 py-2 bg-purple-950 border border-purple-700 rounded-lg text-white text-center font-bold outline-none focus:ring-2 focus:ring-orange-500">
+        <div>
+          <button onclick="verifyAdminPass()" class="px-6 py-2 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-lg transition">
+            登入後臺
+          </button>
+        </div>
+      </div>
+
+      <!-- 後臺主要功能區 (登入後顯示) -->
+      <div id="admin-content" class="flex-grow flex flex-col hidden overflow-hidden">
+        <!-- 後臺頁籤 -->
+        <div class="flex border-b border-purple-800 bg-purple-950">
+          <button id="tab-btn-records" onclick="switchAdminTab('records')" class="flex-1 py-2.5 text-sm font-bold active-tab transition">
+            🏆 闖關成功學生紀錄
+          </button>
+          <button id="tab-btn-covers" onclick="switchAdminTab('covers')" class="flex-1 py-2.5 text-sm font-bold text-purple-300 transition">
+            🖼️ 書籍封面管理 (14本)
+          </button>
+        </div>
+
+        <!-- 頁籤1: 學生紀錄 -->
+        <div id="tab-records" class="p-4 space-y-4 flex-grow overflow-y-auto">
+          <div class="flex justify-between items-center">
+            <span class="text-xs text-purple-300">闖關成功人數：<b id="record-count" class="text-orange-400 text-sm">0</b> 人</span>
+            <div class="space-x-2">
+              <button onclick="exportCSV()" class="px-3 py-1 bg-green-800 hover:bg-green-700 text-green-100 text-xs font-bold rounded transition">
+                📥 匯出 CSV 檔
+              </button>
+              <button onclick="clearAllRecords()" class="px-3 py-1 bg-red-900 hover:bg-red-800 text-red-200 text-xs font-bold rounded transition">
+                🗑️ 清空紀錄
+              </button>
+            </div>
+          </div>
+
+          <div class="border border-purple-800 rounded-xl overflow-hidden">
+            <table class="w-full text-left text-xs md:text-sm">
+              <thead class="bg-purple-950 text-orange-400">
+                <tr>
+                  <th class="p-2.5">班級</th>
+                  <th class="p-2.5">座號</th>
+                  <th class="p-2.5">完成時間</th>
+                  <th class="p-2.5 text-right">操作</th>
+                </tr>
+              </thead>
+              <tbody id="records-table-body" class="divide-y divide-purple-900/50 text-gray-200">
+                <!-- 資料由 JS 動態生成 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 頁籤2: 書籍封面圖片管理 -->
+        <div id="tab-covers" class="p-4 space-y-4 flex-grow overflow-y-auto hidden">
+          <p class="text-xs text-purple-300">老師可在此上傳/更新 14 本書籍的封面照片（上傳後會儲存於瀏覽器）：</p>
+          <div id="covers-manage-list" class="space-y-3">
+            <!-- 14本書籍管理卡片由 JS 動態生成 -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- JavaScript 邏輯程式碼 -->
+  <script>
+    // ==========================================
+    // 1. 完整 14 題庫資料定義
+    // ==========================================
+    const ALL_QUESTIONS = [
+      {
+        id: "q1",
+        book: "《見鬼不怪鬼》",
+        difficulty: "★",
+        stars: 1,
+        question: "這本書的作者是誰呢?",
+        hint: "",
+        options: { A: "林世仁", B: "何大金", C: "鄒敦怜", D: "王文華" },
+        answer: "C"
+      },
+      {
+        id: "q2",
+        book: "《見鬼不怪鬼1:分身狐狸》",
+        difficulty: "★★★",
+        stars: 3,
+        question: "紫桃會什麼招數呢?",
+        hint: "提示：答案在p48-59",
+        options: { A: "增強能力", B: "分身術", C: "控制意念", D: "瞬間移動" },
+        answer: "B"
+      },
+      {
+        id: "q3",
+        book: "《見鬼不怪鬼2:不怕鬼的書生》",
+        difficulty: "★★★",
+        stars: 3,
+        question: "考試前要拜哪尊神明呢?",
+        hint: "提示：答案在書本前25頁",
+        options: { A: "媽祖", B: "文昌帝君", C: "閻羅王", D: "城隍爺" },
+        answer: "B"
+      },
+      {
+        id: "q4",
+        book: "《見鬼不怪鬼2:不怕鬼的書生》",
+        difficulty: "★★★",
+        stars: 3,
+        question: "生前愛聽流言、喜歡講別人是非的人,到陰間會受到什麼懲罰?",
+        hint: "提示：答案在p52-65",
+        options: { A: "嘴巴被縫起來", B: "耳朵太長被自己踩到", C: "屁股朝上、臉朝下,用雙手爬行", D: "嘴巴太小不能吃東西" },
+        answer: "B"
+      },
+      {
+        id: "q5",
+        book: "《見鬼不怪鬼3:煞神撞煞神》",
+        difficulty: "★★★",
+        stars: 3,
+        question: "誰在守靈時睡著了?",
+        hint: "提示：答案在書本前30頁",
+        options: { A: "青面鬼", B: "阿喜", C: "王老夫人", D: "徐道士" },
+        answer: "B"
+      },
+      {
+        id: "q6",
+        book: "《【小妖怪系列8】校園裡的小妖怪:遲到小魔女》",
+        difficulty: "★★",
+        stars: 2,
+        question: "校長和老師沒有在校門口站崗時,誰會假扮成老師?",
+        hint: "",
+        options: { A: "遲到小魔女", B: "來跳舞猴魔", C: "早安千次怪", D: "來呀來呀書妖" },
+        answer: "C"
+      },
+      {
+        id: "q7",
+        book: "《菁英小隊1》",
+        difficulty: "★",
+        stars: 1,
+        question: "誰是五人小隊的領袖?",
+        hint: "提示：請看人物簡介",
+        options: { A: "福安", B: "小畢", C: "彤妹", D: "小野" },
+        answer: "D"
+      },
+      {
+        id: "q8",
+        book: "《妖怪托顧所1》",
+        difficulty: "★★★",
+        stars: 3,
+        question: "故事中的彌助為什麼必須開始照顧妖怪小孩?",
+        hint: "提示：答案在.26-36頁",
+        options: { A: "因為他打破了妖怪保母姑獲鳥的家", B: "因為他主動向妖怪奉行所報名", C: "因為千彌希望他學習照顧妖怪", D: "因為他很喜歡照顧小孩" },
+        answer: "A"
+      },
+      {
+        id: "q9",
+        book: "《妖怪托顧所8》",
+        difficulty: "★",
+        stars: 1,
+        question: "紅珠從冰牢逃出來後,想要對誰下手?",
+        hint: "提示：答案在書本背面簡介中",
+        options: { A: "姑獲鳥", B: "彌助", C: "千彌", D: "月夜王公" },
+        answer: "B"
+      },
+      {
+        id: "q10",
+        book: "《鬼怪食堂3》",
+        difficulty: "★★",
+        stars: 2,
+        question: "主角東俊有什麼遺傳性症狀?",
+        hint: "",
+        options: { A: "手抖症", B: "心臟病", C: "氣喘", D: "高血壓" },
+        answer: "A"
+      },
+      {
+        id: "q11",
+        book: "《鬼怪食堂5》",
+        difficulty: "★★",
+        stars: 2,
+        question: "《鬼怪食堂5》中,誰因為成績一直沒有進步而來到鬼怪食堂",
+        hint: "",
+        options: { A: "秀雅", B: "河英", C: "智勳", D: "敏書" },
+        answer: "C"
+      },
+      {
+        id: "q12",
+        book: "《鬼怪食堂8》",
+        difficulty: "★",
+        stars: 1,
+        question: "《鬼怪食堂8》最後一個故事中的主角珉宇原本學習的是什麼才藝",
+        hint: "",
+        options: { A: "籃球", B: "跆拳道", C: "畫畫", D: "鋼琴" },
+        answer: "D"
+      },
+      {
+        id: "q13",
+        book: "《神奇柑仔店20》",
+        difficulty: "★★",
+        stars: 2,
+        question: "《神奇柑仔店20》序章中,可以看出「錢天堂」商店能夠提供客人甚麼服務?",
+        hint: "",
+        options: { A: "販售AI機器人", B: "贈送免費糖果", C: "解決人們的煩惱", D: "設計應用程式" },
+        answer: "C"
+      },
+      {
+        id: "q14",
+        book: "《大話山海經》",
+        difficulty: "★★",
+        stars: 2,
+        question: "《大話山海經》一系列中記載了許多奇特的生物,哪一項最符合本書的特色?",
+        hint: "",
+        options: { A: "只介紹真實存在的動物", B: "記載許多神話中的奇獸與怪物", C: "只介紹恐龍", D: "只介紹臺灣的動物" },
+        answer: "B"
+      }
+    ];
+
+    // ==========================================
+    // 2. 遊戲全域狀態變數
+    // ==========================================
+    let currentStudent = { className: "", seatNo: "" };
+    let activeNineQuestions = []; // 抽出的9題
+    let gridAnswersStatus = Array(9).fill(false); // 9格是否答對
+    let activeQuestionIndex = -1; // 目前正在作答的格子索引 (0~8)
+    let remainingErrors = 3; // 剩餘錯誤機會
+    let customBookCovers = {}; // 自訂書籍封面 DataURL
+
+    // ==========================================
+    // 3. 初始化與頁面載入
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', () => {
+      initSeatOptions();
+      loadCustomCovers();
+    });
+
+    // 初始化座號選項 (1-16, 21-32)
+    function initSeatOptions() {
+      const selectSeat = document.getElementById('select-seat');
+      selectSeat.innerHTML = '<option value="">-- 請選擇座號 --</option>';
+      
+      const addSeat = (num) => {
+        const val = num < 10 ? '0' + num : '' + num;
+        selectSeat.innerHTML += `<option value="${val}">${val} 號</option>`;
+      };
+
+      for (let i = 1; i <= 16; i++) addSeat(i);
+      for (let i = 21; i <= 32; i++) addSeat(i);
+    }
+
+    // 從 LocalStorage 載入自訂封面
+    function loadCustomCovers() {
+      try {
+        const saved = localStorage.getItem('ghost_game_book_covers');
+        if (saved) customBookCovers = JSON.parse(saved);
+      } catch (e) {
+        console.error("載入自訂封面失敗", e);
+      }
+    }
+
+    // 生成預設萬聖節風格 SVG 封面
+    function generateDefaultCoverSVG(bookName) {
+      const cleanName = bookName.replace(/《|》/g, '');
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="280" viewBox="0 0 200 280">
+          <rect width="200" height="280" fill="#1e0c38"/>
+          <rect x="5" y="5" width="190" height="270" fill="none" stroke="#ff7700" stroke-width="3" rx="8"/>
+          <path d="M 30 20 L 170 20 L 170 260 L 30 260 Z" fill="#2d1354" stroke="#7e22ce" stroke-width="1"/>
+          <text x="100" y="60" font-family="sans-serif" font-size="36" text-anchor="middle">👻</text>
+          <text x="100" y="120" font-family="sans-serif" font-size="14" font-weight="bold" fill="#ff9e00" text-anchor="middle">
+            <tspan x="100" dy="0">${cleanName.substring(0, 8)}</tspan>
+            <tspan x="100" dy="20">${cleanName.substring(8)}</tspan>
+          </text>
+          <text x="100" y="210" font-family="sans-serif" font-size="10" fill="#a855f7" text-anchor="middle">萬聖節主題書展</text>
+          <text x="100" y="240" font-family="sans-serif" font-size="28" text-anchor="middle">🎃</text>
+        </svg>
+      `;
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    }
+
+    // 取得書籍封面
+    function getBookCoverSrc(bookName) {
+      if (customBookCovers[bookName]) return customBookCovers[bookName];
+      return generateDefaultCoverSVG(bookName);
+    }
+
+    // ==========================================
+    // 4. 遊戲流程控管
+    // ==========================================
+    function startGame() {
+      const className = document.getElementById('select-class').value;
+      const seatNo = document.getElementById('select-seat').value;
+
+      if (!className || !seatNo) {
+        alert("請先選擇【班級】與【座號】喔！");
+        return;
+      }
+
+      if (checkStudentCompleted(className, seatNo)) {
+        alert(`【${className}班 ${seatNo}號】已經完成過本活動並登錄成績囉！`);
+        return;
+      }
+
+      currentStudent = { className, seatNo };
+      document.getElementById('display-student-info').textContent = `${className}班 ${seatNo}號`;
+
+      remainingErrors = 3;
+      updateHeartsDisplay();
+      gridAnswersStatus = Array(9).fill(false);
+
+      pickNineQuestions();
+      showView('grid');
+      renderGrid();
+    }
+
+    function pickNineQuestions() {
+      const star3List = ALL_QUESTIONS.filter(q => q.stars === 3);
+      const otherList = ALL_QUESTIONS.filter(q => q.stars < 3);
+
+      const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+
+      const pickedStar3 = shuffle(star3List).slice(0, 3);
+      const pickedOther = shuffle(otherList).slice(0, 6);
+
+      activeNineQuestions = shuffle([...pickedStar3, ...pickedOther]);
+    }
+
+    function renderGrid() {
+      const gridContainer = document.getElementById('grid-container');
+      gridContainer.innerHTML = '';
+
+      activeNineQuestions.forEach((q, idx) => {
+        const isCorrect = gridAnswersStatus[idx];
+        const coverSrc = getBookCoverSrc(q.book);
+
+        const card = document.createElement('div');
+        card.className = `relative cursor-pointer rounded-xl p-2 bg-purple-950 border-2 transition transform hover:-translate-y-1 hover:shadow-lg flex flex-col items-center justify-between ${
+          isCorrect ? 'border-green-500 bg-green-950/30' : 'border-purple-700/80 hover:border-orange-500'
+        }`;
+        card.onclick = () => openQuestion(idx);
+
+        card.innerHTML = `
+          <div class="w-full flex justify-between items-center mb-1 text-[10px] md:text-xs font-bold text-amber-300">
+            <span>${q.difficulty}</span>
+            <span class="text-purple-400">#${idx + 1}</span>
+          </div>
+
+          <div class="w-full h-24 md:h-28 rounded overflow-hidden bg-purple-900 border border-purple-800 flex items-center justify-center relative">
+            <img src="${coverSrc}" alt="封面" class="w-full h-full object-cover">
+            ${isCorrect ? `
+              <div class="absolute inset-0 bg-green-950/80 backdrop-blur-[1px] flex flex-col items-center justify-center text-green-400 animate-bounce">
+                <span class="text-4xl font-black">⭕</span>
+                <span class="text-[10px] font-bold mt-1 text-green-300">抓到鬼囉!</span>
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="w-full text-center mt-1.5">
+            <div class="text-[11px] md:text-xs font-bold text-purple-200 truncate">${q.book}</div>
+          </div>
+        `;
+
+        gridContainer.appendChild(card);
+      });
+    }
+
+    // ==========================================
+    // 5. 答題與連線驗證邏輯
+    // ==========================================
+    function openQuestion(idx) {
+      if (gridAnswersStatus[idx]) {
+        alert("這一格已經答對囉！請選擇其他格子～");
+        return;
+      }
+
+      activeQuestionIndex = idx;
+      const q = activeNineQuestions[idx];
+
+      document.getElementById('q-difficulty').textContent = `難度：${q.difficulty}`;
+      document.getElementById('q-book').textContent = q.book;
+      document.getElementById('q-cover-img').src = getBookCoverSrc(q.book);
+      document.getElementById('q-text').textContent = q.question;
+      
+      const hintElem = document.getElementById('q-hint');
+      if (q.hint) {
+        hintElem.textContent = q.hint;
+        hintElem.classList.remove('hidden');
+      } else {
+        hintElem.classList.add('hidden');
+      }
+
+      document.getElementById('opt-A').textContent = q.options.A;
+      document.getElementById('opt-B').textContent = q.options.B;
+      document.getElementById('opt-C').textContent = q.options.C;
+      document.getElementById('opt-D').textContent = q.options.D;
+
+      showView('question');
+    }
+
+    function submitAnswer(chosenOption) {
+      if (activeQuestionIndex < 0) return;
+
+      const q = activeNineQuestions[activeQuestionIndex];
+
+      if (chosenOption === q.answer) {
+        gridAnswersStatus[activeQuestionIndex] = true;
+        alert("🎉 恭喜答對了！順利抓到這一格的鬼囉！");
+
+        if (checkBingoLine()) {
+          saveCompletedStudent();
+          document.getElementById('win-student-name').textContent = `${currentStudent.className}班 ${currentStudent.seatNo}號`;
+          showView('win');
+        } else {
+          showView('grid');
+          renderGrid();
+        }
+
+      } else {
+        remainingErrors--;
+        updateHeartsDisplay();
+
+        if (remainingErrors <= 0) {
+          alert("❌ 答錯囉！3 次機會已用完，重頭開始吧！");
+          showView('gameover');
+        } else {
+          alert(`❌ 答錯囉！還剩下 ${remainingErrors} 次錯誤機會，再試試看！`);
+          showView('grid');
+        }
+      }
+    }
+
+    function checkBingoLine() {
+      const lines = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+      ];
+
+      return lines.some(line => line.every(idx => gridAnswersStatus[idx] === true));
+    }
+
+    function updateHeartsDisplay() {
+      const heartsContainer = document.getElementById('hearts-container');
+      let html = '';
+      for (let i = 0; i < 3; i++) {
+        html += i < remainingErrors ? '❤️' : '🖤';
+      }
+      heartsContainer.innerHTML = html;
+    }
+
+    function backToGrid() {
+      showView('grid');
+    }
+
+    function confirmRestartGame() {
+      if (confirm("確定要重新開始嗎？將會重新抽取 9 個題目喔！")) {
+        restartGame();
+      }
+    }
+
+    function restartGame() {
+      remainingErrors = 3;
+      updateHeartsDisplay();
+      gridAnswersStatus = Array(9).fill(false);
+      pickNineQuestions();
+      showView('grid');
+      renderGrid();
+    }
+
+    function resetToHome() {
+      document.getElementById('select-class').value = '';
+      document.getElementById('select-seat').value = '';
+      showView('start');
+    }
+
+    function showView(viewName) {
+      ['start', 'grid', 'question', 'win', 'gameover'].forEach(name => {
+        document.getElementById(`view-${name}`).classList.add('hidden');
+      });
+      document.getElementById(`view-${viewName}`).classList.remove('hidden');
+    }
+
+    // ==========================================
+    // 6. 本地 LocalStorage 資料儲存與紀錄
+    // ==========================================
+    function getCompletedRecords() {
+      try {
+        const saved = localStorage.getItem('ghost_game_records');
+        return saved ? JSON.parse(saved) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function checkStudentCompleted(className, seatNo) {
+      const records = getCompletedRecords();
+      return records.some(r => r.className === className && r.seatNo === seatNo);
+    }
+
+    function saveCompletedStudent() {
+      const records = getCompletedRecords();
+      const now = new Date();
+      const timeStr = `${now.getMonth() + 1}/${now.getDate()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      if (!records.some(r => r.className === currentStudent.className && r.seatNo === currentStudent.seatNo)) {
+        records.push({
+          className: currentStudent.className,
+          seatNo: currentStudent.seatNo,
+          time: timeStr,
+          timestamp: Date.now()
+        });
+        try {
+          localStorage.setItem('ghost_game_records', JSON.stringify(records));
+        } catch (e) {
+          console.error("儲存學生紀錄失敗", e);
+        }
+      }
+    }
+
+    // ==========================================
+    // 7. 老師後臺管理功能 (密碼 1014)
+    // ==========================================
+    function openAdminModal() {
+      document.getElementById('admin-modal').classList.remove('hidden');
+      document.getElementById('admin-login').classList.remove('hidden');
+      document.getElementById('admin-content').classList.add('hidden');
+      document.getElementById('admin-pass-input').value = '';
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.add('hidden');
+    }
+
+    function verifyAdminPass() {
+      const inputPass = document.getElementById('admin-pass-input').value;
+      if (inputPass === '1014') {
+        document.getElementById('admin-login').classList.add('hidden');
+        document.getElementById('admin-content').classList.remove('hidden');
+        renderAdminRecords();
+        renderAdminCoversList();
+      } else {
+        alert("密碼錯誤！請重新輸入。");
+      }
+    }
+
+    function switchAdminTab(tabName) {
+      document.getElementById('tab-records').classList.add('hidden');
+      document.getElementById('tab-covers').classList.add('hidden');
+      document.getElementById('tab-btn-records').classList.remove('active-tab');
+      document.getElementById('tab-btn-covers').classList.remove('active-tab');
+
+      if (tabName === 'records') {
+        document.getElementById('tab-records').classList.remove('hidden');
+        document.getElementById('tab-btn-records').classList.add('active-tab');
+        renderAdminRecords();
+      } else {
+        document.getElementById('tab-covers').classList.remove('hidden');
+        document.getElementById('tab-btn-covers').classList.add('active-tab');
+        renderAdminCoversList();
+      }
+    }
+
+    function renderAdminRecords() {
+      const records = getCompletedRecords();
+      document.getElementById('record-count').textContent = records.length;
+      const tbody = document.getElementById('records-table-body');
+      tbody.innerHTML = '';
+
+      if (records.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400">尚無闖關成功紀錄</td></tr>`;
+        return;
+      }
+
+      records.forEach((r, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-purple-900/30";
+        tr.innerHTML = `
+          <td class="p-2.5 font-bold text-orange-300">${r.className} 班</td>
+          <td class="p-2.5 font-bold">${r.seatNo} 號</td>
+          <td class="p-2.5 text-xs text-purple-300">${r.time}</td>
+          <td class="p-2.5 text-right">
+            <button onclick="deleteSingleRecord(${idx})" class="px-2 py-1 bg-red-900/80 hover:bg-red-700 text-red-100 rounded text-xs transition">
+              🗑️ 刪除
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function deleteSingleRecord(idx) {
+      if (confirm("確定要刪除這筆學生紀錄嗎？")) {
+        const records = getCompletedRecords();
+        records.splice(idx, 1);
+        try {
+          localStorage.setItem('ghost_game_records', JSON.stringify(records));
+        } catch (e) {}
+        renderAdminRecords();
+      }
+    }
+
+    function clearAllRecords() {
+      if (confirm("⚠️ 警告：確定要清空『所有』學生闖關紀錄嗎？此動作無法復原！")) {
+        localStorage.removeItem('ghost_game_records');
+        renderAdminRecords();
+      }
+    }
+
+    function exportCSV() {
+      const records = getCompletedRecords();
+      if (records.length === 0) {
+        alert("目前尚無可匯出的紀錄！");
+        return;
+      }
+
+      let csvContent = "\uFEFF班級,座號,完成時間\n";
+      records.forEach(r => {
+        csvContent += `"${r.className}","${r.seatNo}","${r.time}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `抓鬼九宮格闖關成功名單_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function renderAdminCoversList() {
+      const container = document.getElementById('covers-manage-list');
+      container.innerHTML = '';
+
+      ALL_QUESTIONS.forEach((q, idx) => {
+        const currentCover = getBookCoverSrc(q.book);
+
+        const card = document.createElement('div');
+        card.className = "p-3 bg-purple-950 border border-purple-800 rounded-xl flex items-center justify-between gap-3";
+        card.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-16 bg-purple-900 rounded overflow-hidden flex-shrink-0 border border-purple-700">
+              <img src="${currentCover}" alt="封面" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <div class="text-xs text-amber-400 font-bold">${q.difficulty}</div>
+              <div class="text-sm font-bold text-white">${q.book}</div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="px-2.5 py-1 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded cursor-pointer text-center transition">
+              📷 上傳圖片
+              <input type="file" accept="image/*" class="hidden" onchange="uploadBookCover(event, '${q.book}')">
+            </label>
+            ${customBookCovers[q.book] ? `
+              <button onclick="resetBookCover('${q.book}')" class="px-2 py-0.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-[10px] rounded transition">
+                重置預設
+              </button>
+            ` : ''}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function uploadBookCover(event, bookName) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const maxWidth = 300;
+          const scale = maxWidth / img.width;
+          canvas.width = maxWidth;
+          canvas.height = img.height * scale;
+
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+
+          customBookCovers[bookName] = compressedDataUrl;
+          try {
+            localStorage.setItem('ghost_game_book_covers', JSON.stringify(customBookCovers));
+            alert(`已成功更新《${bookName}》的封面！`);
+            renderAdminCoversList();
+          } catch (e) {
+            alert("圖片空間已滿，建議選擇較小的圖片檔案。");
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetBookCover(bookName) {
+      delete customBookCovers[bookName];
+      try {
+        localStorage.setItem('ghost_game_book_covers', JSON.stringify(customBookCovers));
+      } catch (e) {}
+      renderAdminCoversList();
+    }
+  </script>
+</body>
+</html>
